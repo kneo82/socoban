@@ -64,9 +64,11 @@ public class Level {
 
     public Level() {
         undo = new Stack<>();
+        foundSpot();
         foundCoord();
         moveN = 0;
         pushesN = getPush();
+
 
     }
 
@@ -74,6 +76,7 @@ public class Level {
         undo = new Stack<>();
         lev = l.getLabirint(n).getLabirint();
         levelN = n + 1;
+        foundSpot();
         foundCoord();
         moveN = 0;
         pushesN = getPush();
@@ -88,16 +91,22 @@ public class Level {
         return tmp;
     }
 
+    private void foundSpot(){
+        for (int i = 0; i < lev[0].length; i++)
+            for (int j = 0; j < lev.length; j++)
+                if (lev[j][i] == SPOT_FREE || lev[j][i] == SPOT_TAKEN) {
+                    pointSpot.add(new Point(j, i));
+                }
+    }
     private void foundCoord() {
+        // pointSpot=new ArrayList<>();
         for (int i = 0; i < lev[0].length; i++)
             for (int j = 0; j < lev.length; j++) {
                 if (lev[j][i] == LOADER) {
                     coordX = j;
                     coordY = i;
                 }
-                if (lev[j][i] == SPOT_FREE || lev[j][i] == SPOT_TAKEN) {
-                    pointSpot.add(new Point(j, i));
-                }
+
             }
     }
 
@@ -137,8 +146,10 @@ public class Level {
 
     private int getPush() {
         int n = 0;
+        int x = 0;
         for (Point p : pointSpot) {
             if (lev[p.x][p.y] == SPOT_TAKEN) n++;
+
         }
         return pointSpot.size() - n;
 

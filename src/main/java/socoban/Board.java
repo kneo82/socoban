@@ -211,7 +211,9 @@ public class Board extends JPanel {
                     break;
             }
             repaint();
+
             if (level.isWin()) {
+
                 if (levelN < labs.getSize()) {
                     levelN++;
                     level = new Level(labs, levelN);
